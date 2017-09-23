@@ -1,56 +1,47 @@
 package com.uninorte.rubricas;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class Estudiantes extends AppCompatActivity {
-    public ListView list;
-    public static ArrayList listaEstudiante = new ArrayList();
-    public static ArrayList listacodigo = new ArrayList();
+public class Subelementos extends AppCompatActivity {
+    public ListView listas;
     private DatabaseHandler base = new DatabaseHandler(this);
-    public static int pimagen=R.drawable.persona;
+    public static ArrayList listasub = new ArrayList();
+    public static ArrayList listasubpes= new ArrayList();
     Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_estudiantes);
+        setContentView(R.layout.activity_subelementos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        super.onResume();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               dialogo();
+                dialogo();
             }
         });
         Intent i = getIntent();
-        int po=i.getIntExtra("Pos",0);
-        listaEstudiante = base.s("Estudiantes",po);
-        listacodigo = base.selectc("Estudiantes",po);
-        context =this;
-        list = (ListView) findViewById(R.id.listaestudiante);
-        list.setAdapter(new GestionarAdapter(this,listaEstudiante,pimagen,listacodigo));
-
+        int po =i.getIntExtra("P",0);
+        listasub= base.selectSubElement("Subelementos",po);
+        listasubpes = base.selectsubpeso("Subelementos",po);
+        context=this;
+        listas = (ListView) findViewById(R.id.listasubelement);
+        listas.setAdapter(new GestionsAdapter(this,listasub,listasubpes));
     }
 
     public void dialogo(){
-        Intent i = new Intent(this, Formulario.class);
+        Intent i = new Intent(this, Formulario3.class);
         startActivityForResult(i, 1);
     }
 

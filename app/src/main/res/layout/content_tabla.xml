@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.uninorte.rubricas.Estudiantes"
-    tools:showIn="@layout/activity_estudiantes2">
+    tools:context="com.uninorte.rubricas.Elementos"
+    tools:showIn="@layout/activity_tabla">
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listestudi">
-    </ListView>
+        android:id="@+id/listelemento"></ListView>
 
 </android.support.constraint.ConstraintLayout>

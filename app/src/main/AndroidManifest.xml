@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icono"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icono"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -30,6 +30,30 @@
         <activity
             android:name=".Estudiantes"
             android:label="@string/title_activity_estudiantes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Formulario"
+            android:label="@string/title_activity_formulario"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Elementos"
+            android:label="Elementos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Formulario2"
+            android:label="@string/title_activity_formulario2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Subelementos"
+            android:label="@string/title_activity_subelementos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Formulario3"
+            android:label="@string/title_activity_formulario3"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Evaluacion"
+            android:label="@string/title_activity_evaluacion"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

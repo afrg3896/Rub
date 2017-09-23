@@ -4,4 +4,10 @@
     <string name="title_activity_cursos">Cursos</string>
     <string name="title_activity_estudiantes">Estudiantes</string>
     <string name="title_activity_rubrica">Rubrica</string>
+    <string name="title_activity_formulario">Formulario</string>
+    <string name="title_activity_tabla">Tabla</string>
+    <string name="title_activity_formulario2">Formulario2</string>
+    <string name="title_activity_subelementos">Subelementos</string>
+    <string name="title_activity_formulario3">Formulario3</string>
+    <string name="title_activity_evaluacion">Evaluacion</string>
 </resources>

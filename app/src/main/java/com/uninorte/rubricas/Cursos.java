@@ -2,7 +2,9 @@ package com.uninorte.rubricas;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -43,6 +45,10 @@ public class Cursos extends AppCompatActivity {
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int h = position +1;
+                Intent i = new Intent(Cursos.this, Estudiantes.class);
+                i.putExtra("Pos",h);
+                startActivity(i);
             }
         });
     }
@@ -72,5 +78,5 @@ public class Cursos extends AppCompatActivity {
         });
 
         alert.show();
-    }
+        }
 }
