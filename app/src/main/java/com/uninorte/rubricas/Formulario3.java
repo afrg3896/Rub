@@ -19,10 +19,10 @@ import java.util.ArrayList;
 public class Formulario3 extends AppCompatActivity {
     private DatabaseHandler base = new DatabaseHandler(this);
     public static ArrayList listasub = new ArrayList();
-    int porcentaje;
+    int elemento;
 
     Spinner s;
-    EditText nomsub , pesosub;
+    EditText nomsub , pesosub,l1,l2,l3,l4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,42 +30,73 @@ public class Formulario3 extends AppCompatActivity {
         setContentView(R.layout.activity_formulario3);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        s = (Spinner) findViewById(R.id.elementos);
         listasub = base.select("Elementos");
-        ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listasub);
-        s.setAdapter(itemsAdapter);
+        Intent it =getIntent();
+        elemento=it.getIntExtra("P",0);
     }
     public void guardarsub (View v){
         nomsub = (EditText) findViewById(R.id.nombresub);
         pesosub = (EditText) findViewById(R.id.pesosub);
-        int j = s.getSelectedItemPosition() +1;
+        l1=(EditText)findViewById(R.id.editText);
+        l2=(EditText)findViewById(R.id.editText2);
+        l3=(EditText)findViewById(R.id.editText3);
+        l4=(EditText)findViewById(R.id.editText4);
         String categor = nomsub.getText().toString();
-        int pes = Integer.parseInt(pesosub.getText().toString());
-        base.insertsubElementos(categor,pes,j);
-        Toast.makeText(getApplicationContext(),"Creación exitosa del Subelemento: " + categor,Toast.LENGTH_SHORT).show();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Salir");
-        builder.setMessage("¿Desea salir de la creación de Subelementos?");
+        final int pes=Integer.parseInt(pesosub.getText().toString());
 
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Intent returnIntent = new Intent();
-                setResult(Estudiantes.RESULT_OK, returnIntent);
+        Subelementos.NSubElementos += pes;
+        String n1=l1.getText().toString();
+        String n2=l2.getText().toString();
+        String n3=l3.getText().toString();
+        String n4=l4.getText().toString();
+        if(Subelementos.NSubElementos <=100){
+
+            base.insertsubElementos(categor,pes,n1,n2,n3,n4,elemento);
+            Toast.makeText(getApplicationContext(),"Creación exitosa del subelemento:" + categor,Toast.LENGTH_SHORT).show();
+            nomsub.getText().clear();
+            pesosub.getText().clear();
+            l1.getText().clear();
+            l2.getText().clear();
+            l3.getText().clear();
+            l4.getText().clear();
+            if(Subelementos.NSubElementos==100){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Atención");
+                builder.setMessage("No puede salir hasta que el peso sea igual a 100");
+
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        nomsub.getText().clear();
+                        pesosub.getText().clear();
+                        l1.getText().clear();
+                        l2.getText().clear();
+                        l3.getText().clear();
+                        l4.getText().clear();
+                    }
+                });
+                builder.show();
+                Intent returnIntent= new Intent();
+                setResult(Subelementos.RESULT_OK,returnIntent);
                 finish();
             }
-        });
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Atención");
+            builder.setMessage("Agregue un subitem con el peso correcto");
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                nomsub.getText().clear();
-                pesosub.getText().clear();
-            }
-        });
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    Subelementos.NSubElementos -=pes;
+                    pesosub.setText(String.valueOf(100-Subelementos.NSubElementos));
+                    l1.getText().clear();
+                    l2.getText().clear();
+                    l3.getText().clear();
+                    l4.getText().clear();
 
-        builder.show();
+                }
+            });
+            builder.show();
+        }
     }
-
     }
 

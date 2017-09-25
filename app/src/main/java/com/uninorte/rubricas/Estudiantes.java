@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -46,6 +47,15 @@ public class Estudiantes extends AppCompatActivity {
         context =this;
         list = (ListView) findViewById(R.id.listaestudiante);
         list.setAdapter(new GestionarAdapter(this,listaEstudiante,pimagen,listacodigo));
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int h = position + 1;
+                Intent i = new Intent(Estudiantes.this,EstudianteNota.class);
+                i.putExtra("ño", h);
+                startActivity(i);
+            }
+        });
 
     }
 

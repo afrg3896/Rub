@@ -10,4 +10,8 @@
     <string name="title_activity_subelementos">Subelementos</string>
     <string name="title_activity_formulario3">Formulario3</string>
     <string name="title_activity_evaluacion">Evaluacion</string>
+    <string name="title_activity_evaluaciones">Evaluaciones</string>
+    <string name="title_activity_formulario4">Formulario4</string>
+    <string name="title_activity_subelementos2">Subelementos2</string>
+    <string name="title_activity_estudiante_nota">EstudianteNota</string>
 </resources>

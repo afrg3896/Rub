@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,29 +18,41 @@ public class Elementos extends AppCompatActivity {
     public static ArrayList listaElementos= new ArrayList();
     public static ArrayList listapeso= new ArrayList();
     private DatabaseHandler base = new DatabaseHandler(this);
+    public static  int NElementos;
     Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        NElementos=0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabla);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Intent i = getIntent();
+        final int po =i.getIntExtra("Pot",0);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogoShow();
+                dialogoShow(po);
             }
         });
-        Intent i = getIntent();
-        int po =i.getIntExtra("Po",0);
+
         listaElementos = base.selectElement("Elementos",po);
         listapeso = base.selectpeso("Elementos",po);
         context=this;
         lista2 = (ListView) findViewById(R.id.listelemento);
         lista2.setAdapter(new GestionAdapter(this,listaElementos,listapeso));
+
+        for (int in=0; in<listapeso.size(); in++){
+            NElementos += Integer.parseInt(listapeso.get(in).toString());
+        }
+
+        if(NElementos>=100){
+            fab.setVisibility(View.GONE);
+        }
+        Toast.makeText(context,String.valueOf(NElementos),Toast.LENGTH_SHORT).show();
+
         lista2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -53,8 +66,9 @@ public class Elementos extends AppCompatActivity {
     }
 
 
-    public void dialogoShow() {
+    public void dialogoShow(int po) {
         Intent i = new Intent(this, Formulario2.class);
+        i.putExtra("P",po);
         startActivityForResult(i,1);
     }
 
@@ -65,6 +79,13 @@ public class Elementos extends AppCompatActivity {
                 finish();
                 startActivity(getIntent());
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (NElementos == 100) {
+            super.onBackPressed();
         }
     }
 }

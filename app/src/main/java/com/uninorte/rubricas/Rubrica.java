@@ -44,7 +44,7 @@ public class Rubrica extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
              int h = position + 1;
              Intent i = new Intent(Rubrica.this, Elementos.class);
-             i.putExtra("Po", h);
+             i.putExtra("Pot", h);
              startActivity(i);
 
          }

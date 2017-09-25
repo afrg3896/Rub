@@ -27,6 +27,7 @@ public class Prueba extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        fab.setVisibility(View.GONE);
     }
 
     @Override
@@ -58,6 +59,10 @@ public class Prueba extends AppCompatActivity {
 
     public void IrRubrica (View view){
         Intent i = new Intent(this, Rubrica.class);
+        startActivity(i);
+    }
+    public void IrEvaluacion (View view){
+        Intent i = new Intent(this, Evaluacion.class);
         startActivity(i);
     }
 }

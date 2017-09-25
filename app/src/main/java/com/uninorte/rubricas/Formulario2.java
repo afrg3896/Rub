@@ -21,10 +21,8 @@ public class Formulario2 extends AppCompatActivity {
 
     private DatabaseHandler base = new DatabaseHandler(this);
     public static ArrayList listaR = new ArrayList();
-    int porcentaje=0;
-
-    Spinner s;
-    EditText categoria , peso;
+    int rubrica;
+    EditText categoria, peso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,43 +30,53 @@ public class Formulario2 extends AppCompatActivity {
         setContentView(R.layout.activity_formulario2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        s = (Spinner) findViewById(R.id.cursos);
         listaR = base.select("Rubricas");
-        ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,listaR);
-        s.setAdapter(itemsAdapter);
+
+        Intent it = getIntent();
+        rubrica = it.getIntExtra("P", 0);
     }
 
 
-    public void guardarest(View v){
+    public void guardarest(View v) {
         categoria = (EditText) findViewById(R.id.nombre);
         peso = (EditText) findViewById(R.id.codigo);
-        int j = s.getSelectedItemPosition() +1;
         String categor = categoria.getText().toString();
-        int pes = Integer.parseInt(peso.getText().toString());
-        base.insertElementos(categor,pes,j);
-        Toast.makeText(getApplicationContext(),"Creación exitosa del elemento: "+categor,Toast.LENGTH_SHORT).show();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Salir");
-        builder.setMessage("¿Desea salir de la creación de Elementos?");
+        final int pes = Integer.parseInt(peso.getText().toString());
+        Elementos.NElementos += pes;
+        if (Elementos.NElementos <= 100) {
+            base.insertElementos(categor, pes, rubrica);
+            Toast.makeText(getApplicationContext(), "Creación exitosa del elemento:" + categor, Toast.LENGTH_SHORT).show();
+            categoria.getText().clear();
+            peso.getText().clear();
 
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Intent returnIntent = new Intent();
-                setResult(Estudiantes.RESULT_OK, returnIntent);
-                finish();
+            if (Elementos.NElementos == 100) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Salir");
+                builder.setMessage("Ahora puede salir");
+
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        categoria.getText().clear();
+                        peso.getText().clear();
+                        Intent returnIntent = new Intent();
+                        setResult(Elementos.RESULT_OK, returnIntent);
+                        finish();
+                    }
+                });
+                builder.show();
             }
-        });
-
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                categoria.getText().clear();
-                peso.getText().clear();
-            }
-        });
-
-        builder.show();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Atención");
+            builder.setMessage("Agregue un item con el peso correcto");
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    Elementos.NElementos -= pes;
+                    peso.setText(String.valueOf(100 - Elementos.NElementos));
+                }
+            });
+            builder.show();
+        }
     }
-
-
 }
+

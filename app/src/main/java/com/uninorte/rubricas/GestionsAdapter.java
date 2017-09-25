@@ -47,6 +47,7 @@ public class GestionsAdapter extends BaseAdapter {
         fila = inflater.inflate(R.layout.lista_subelem, null);
         holder.t = (TextView) fila.findViewById(R.id.text8);
         holder.t1 =(TextView) fila.findViewById(R.id.text9);
+        holder.t2 =(TextView) fila.findViewById(R.id.textView11);
         holder.t.setText((String) subelemento.get(position));
         holder.t1.setText("Peso: "+ pesub.get(position));
         return fila;
@@ -56,5 +57,6 @@ public class GestionsAdapter extends BaseAdapter {
     {
         TextView t;
         TextView t1;
+        TextView t2;
     }
 }
